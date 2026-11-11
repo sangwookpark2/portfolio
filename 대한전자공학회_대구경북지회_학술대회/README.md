@@ -23,16 +23,16 @@
 
 ---
 
-## 🛠️ 하드웨어 구성 요소 (Hardware Components)
+## 🔌 하드웨어 핀맵 (Pin Alignment & Circuit Layout)
 
-| 구성 요소 | 역할 및 주요 기능 |
-| :--- | :--- |
-| **Arduino Uno** | 메인 제어부, 센서 데이터 처리 및 자동 제어 로직 수행 |
-| **DHT11 온습도 센서** | 스마트팜 내부 온도 및 습도 주기적 측정 (핀: `A0`) |
-| **토양 수분 센서** | 토양 수분 상태를 정량화하여 급수/환경 제어 시점 판단 (핀: `A1`) |
-| **1602 I2C LCD** | 실시간 온/습도, 토양 수분 수치 및 경고 메시지 시각화 |
-| **Adafruit NeoPixel RGB LED** | 12개 LED 모듈 기반 환풍/온도 상태 시각 알림 (핀: `9`) |
-| **L298N DC 모터 드라이버** | 환풍기(DC 모터) 제어 (핀: `4, 5, 6, 7`) |
+| 분류 | 모듈 / 부품 | 아두이노 핀 | 역할 및 설명 |
+| :--- | :--- | :--- | :--- |
+| **Input** | DHT11 온습도 센서 | `A0` | 실시간 온도 및 습도 수집 |
+| **Input** | 토양 수분 센서 | `A1` | 토양 수분 아날로그 값 수집 |
+| **Output** | 1602 I2C LCD | `SDA(A4)`, `SCL(A5)` | 환경 데이터 및 수분 경고 메시지 표시 (주소: `0x27`) |
+| **Output** | Adafruit NeoPixel RGB LED | `Digital 9` | 12개 LED 모듈 제어 및 시각적 알림 |
+| **Output** | L298N 모터드라이버 (모터 A) | `Digital 4`, `Digital 5` | 환풍기 DC 모터 제어 (AA, AB) |
+| **Output** | L298N 모터드라이버 (모터 B) | `Digital 6`, `Digital 7` | 환풍기 DC 모터 제어 (BA, BB) |
 
 ---
 
@@ -46,136 +46,16 @@
 
 ---
 
-## 💻 메인 제어 펌웨어 소스코드 (`src/smartfarm_control.ino`)
+## 💻 펌웨어 핵심 제어 로직 요약
 
-```cpp
-#include <Wire.h>               // I2C 통신 라이브러리
-#include <LiquidCrystal_I2C.h>  // 1602 I2C LCD 라이브러리
-#include <Adafruit_NeoPixel.h>  // 네오픽셀 RGB LED 라이브러리
-#include "DHT.h"                // DHT11 온습도 센서 라이브러리
+실제 구동되는 전체 아두이노 소스코드는 [`smartfarm_control.ino`](./smartfarm_control.ino) 파일에 작성되어 있습니다.
 
-#define DHTPIN A0
-#define DHTTYPE DHT11
+### 1. 센서 수집 및 모니터링
+- `DHT11`을 통해 온/습도를 측정하며, `analogRead(A1)`로 측정된 토양 수분값을 `map()` 함수를 통해 `0~100%` 수치로 정량화합니다.
 
-DHT dht(DHTPIN, DHTTYPE);
-Adafruit_NeoPixel RGB_LED = Adafruit_NeoPixel(12, 9, NEO_GRB);
-LiquidCrystal_I2C lcd(0x27, 16, 2);   // I2C 접근 주소 0x27
+### 2. 토양 수분 경고 알림 (`WarrningLCD()`)
+- 측정된 토양 수분이 기준치(`50%`) 미만일 경우 LCD 백라이트를 점멸하고 `"Not enough water / supply water!!"` 경고 메시지를 출력합니다.
 
-// L298N 모터 드라이버 제어 핀 (모터 A / 모터 B)
-int AA = 5; int AB = 4;
-int BA = 6; int BB = 7;
-
-int ON = 1; int OFF = 0;
-
-// 센서 임계값 선언 및 기준값 설정
-float fMax_hum = 0.0;
-float fMax_temp = 0.0;
-float fMin_temp = 0.0;
-int Soil_moisture_reference = 0;
-
-void setup() {
-  fMax_hum  = 60.0;               // 습도 상한 기준값 (60%)
-  fMax_temp = 30.0;               // 온도 상한 기준값 (30°C)
-  fMin_temp = 22.0;               // 온도 하한 기준값 (22°C)
-  Soil_moisture_reference = 50;   // 기준 토양 수분값 (50%)
-  
-  Serial.begin(9600);
-  dht.begin();
-   
-  lcd.init();
-  lcd.backlight();
-  
-  RGB_LED.begin();
-  RGB_LED.setBrightness(200);     // RGB LED 밝기 설정
-  RGB_LED.show();
-
-  pinMode(AA, OUTPUT);
-  pinMode(AB, OUTPUT);
-  pinMode(BA, OUTPUT);
-  pinMode(BB, OUTPUT);
-}
-
-void loop() {
-  float hum = dht.readHumidity();
-  float temp = dht.readTemperature();
-  int Soil_moisture = analogRead(A1);
-  int C_Soil_moisture = map(Soil_moisture, 1023, 0, 0, 100); // 0~100% 변환
-  
-  String strC_Soil = int2String(C_Soil_moisture);
-
-  // 1. 토양 수분 부족 시 경고 LCD 출력
-  if(C_Soil_moisture < Soil_moisture_reference) {
-    WarrningLCD();
-  } else {
-    lcd.setCursor(0, 0);
-    lcd.print("T : "); lcd.print((int)temp); lcd.print("C ");
-    lcd.setCursor(8, 0);
-    lcd.print("H : "); lcd.print((int)hum); lcd.print("% ");
-    lcd.setCursor(0, 1);
-    lcd.print("Soil_M : "); lcd.print(strC_Soil); lcd.print("   ");
-  }
-
-  // 2. 온도 및 습도 상태에 따른 환풍기(DC 모터) 및 네오픽셀 제어
-  if((temp > fMax_temp && hum > fMax_hum) || temp > fMax_temp) {
-    FanONOFF(ON);
-    RGB_Color(RGB_LED.Color(0, 0, 0), 10);
-  } else if(hum > fMax_hum) {
-    FanONOFF(ON);
-    RGB_Color(RGB_LED.Color(100, 100, 100), 10);
-  } else if(temp < fMin_temp) {
-    FanONOFF(OFF);
-    RGB_Color(RGB_LED.Color(100, 100, 100), 10);
-  } else {
-    FanONOFF(OFF);
-    RGB_Color(RGB_LED.Color(0, 0, 0), 10);
-  }
-  
-  delay(200);
-}
-
-// 네오픽셀 제어 함수
-void RGB_Color(float c, int wait) {
-  for (int i = 0; i < RGB_LED.numPixels(); i++) {  
-     RGB_LED.setPixelColor(i, c);
-     RGB_LED.show();
-     delay(wait);
-  }
-}
-
-// LCD 표시 자릿수 정렬 함수
-String int2String(int val) {
-  String sval = "";
-  int val2 = (val/10)%10;   // 10의 자리
-  int val3 = (val/100)%10;  // 100의 자리
-  
-  if(val3 >= 1) {
-    sval = String(val);
-  } else {
-     if(val2 >= 1) sval = " "+String(val);
-     else sval = "  "+String(val);
-  }
-  return sval;
-}
-
-// 수분 경고 메세지 출력 함수
-void WarrningLCD(){ 
-    lcd.clear();
-    delay(200);
-    lcd.backlight();
-    lcd.setCursor(0, 0);
-    lcd.print("Not enough water");
-    lcd.setCursor(0, 1);
-    lcd.print("supply water!!");
-    delay(200);
-}
-
-// 모터 드라이버(L298N) 제어 함수
-void FanONOFF(int OnOff) {
-  if(OnOff == 1) {
-      digitalWrite(AA, HIGH); digitalWrite(AB, LOW);
-      digitalWrite(BA, HIGH); digitalWrite(BB, LOW);
-  } else {
-      digitalWrite(AA, LOW); digitalWrite(AB, LOW);
-      digitalWrite(BA, LOW); digitalWrite(BB, LOW);
-  }
-}
+### 3. 온/습도 기반 환풍기 및 네오픽셀 RGB 제어 (`FanONOFF()`, `RGB_Color()`)
+- **온도 > 30°C 또는 습도 > 60%**: L298N 모터 드라이버를 통해 환풍기(DC 모터)를 가동시킵니다.
+- **온도 < 22°C (저온 상황)**: 환풍기를 정지시키고 네오픽셀 RGB LED를 점등(`RGB(100,100,100)`)하여 적정 생육 환경을 유지합니다.
