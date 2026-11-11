@@ -74,15 +74,15 @@
 
 #전체 아키텍처 흐름
 
-<img width="287" height="402" alt="image" src="https://github.com/user-attachments/assets/a99ed6ed-eac5-4c50-bcce-21777f360fff" />
+!(전체 아키텍처 흐름.png)
 
 #시스템 아키텍처 다이어그램
 
-<img width="638" height="343" alt="image" src="https://github.com/user-attachments/assets/1c6b67fa-7cfd-4f4b-b064-4f72fe79be07" />
+!(시스템 아키텍처 다이어그램.png)
 
 #인터페이스
 
-<img width="697" height="387" alt="image" src="https://github.com/user-attachments/assets/12acfda9-639d-40ab-a29e-c08208fa26ea" />
+!(인터페이스.png)
 
 
 
