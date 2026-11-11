@@ -40,25 +40,30 @@ ESP32 마이크로컨트롤러와 **LoRa (E32-900T20D / 915MHz)** 장거리 무�
 
 
 
-🔌 핀 배치 및 결선도 (Pinout & Wiring)
-1. 송신기 (Tx) ESP32 핀맵
+### 🔌 송신기 (Tx) ESP32 핀맵 (LoRa 기준)
 
-  구분,부품명 / 모듈,ESP32 GPIO,비고
-무선 통신,LoRa E32-900T20D,"GPIO 4 (RX), GPIO 5 (TX)",UART 시리얼 통신
-대기 이산화탄소,MH-Z19C,"GPIO 16 (RX2), GPIO 17 (TX2)",하드웨어 시리얼2 (5V 전원 필수)
-대기 온습도,AM2302 (DHT22),GPIO 13,10KΩ 풀업 저항 연결
-수조 수온,SEN050007 (DS18B20),GPIO 14,"방수형, 10KΩ 풀업 저항 연결"
-대기 조도,GY-302 (BH1750),"GPIO 21 (SDA), GPIO 22 (SCL)",I2C 통신
-토양 수분,SEN0193,GPIO 32,정전식 부식방지 (ADC)
-수질 (TDS),SZH-TSM002,GPIO 33,양액 농도 측정 (ADC)
-수조 수위,SEN0204,GPIO 34,무접점 디지털 입력
-릴레이 제어,5V 1채널 릴레이 (4개),"GPIO 25, 26, 27, 12","펌프 2개, 환기/순환 팬 2개 제어"
+| 구분 | 부품 / 센서명 | ESP32 GPIO 핀 | 비고 |
+| :--- | :--- | :--- | :--- |
+| **무선 통신** | LoRa E32-900T20D | `GPIO 4` (RX), `GPIO 5` (TX) | 915MHz UART 통신 |
+| **대기 이산화탄소** | MH-Z19C | `GPIO 16` (RX2), `GPIO 17` (TX2) | 하드웨어 시리얼2 (5V 전원 필수) |
+| **대기 온습도** | AM2302 (DHT22) | `GPIO 13` | 10KΩ 풀업 저항 연결 |
+| **수조 수온** | SEN050007 (DS18B20) | `GPIO 14` | 방수형, 10KΩ 풀업 저항 연결 |
+| **대기 조도** | GY-302 (BH1750) | `GPIO 21` (SDA), `GPIO 22` (SCL) | I2C 통신 |
+| **토양 수분** | SEN0193 | `GPIO 32` | 정전식 부식방지 (ADC) |
+| **수질 (TDS)** | SZH-TSM002 | `GPIO 33` | 양액 농도 측정 (ADC) |
+| **수조 수위** | SEN0204 | `GPIO 34` | 무접점 디지털 입력 |
+| **릴레이 제어** | 5V 1채널 릴레이 (4개) | `GPIO 25`, `GPIO 26`, `GPIO 27`, `GPIO 12` | 펌프 2개, 팬 2개 제어 |
 
-2. 수신기 (Rx) ESP32 핀맵
-부품명,ESP32 GPIO,비고
-LoRa E32-900T20D (RX),GPIO 16 (RX2),LoRa ➔ ESP32 데이터 수신
-LoRa E32-900T20D (TX),GPIO 17 (TX2),ESP32 ➔ LoRa 명령 송신
-전원 (USB 5V 포트),-,5V 2A 상시 전원 아답터 연결
+---
+
+### 📡 수신기 (Rx) ESP32 핀맵
+
+| 부품명 | ESP32 GPIO 핀 | 비고 |
+| :--- | :--- | :--- |
+| LoRa E32-900T20D (RX) | `GPIO 16` (RX2) | LoRa ➔ ESP32 수신 |
+| LoRa E32-900T20D (TX) | `GPIO 17` (TX2) | ESP32 ➔ LoRa 송신 |
+| 전원 (USB 5V 포트) | - | 5V 2A 아답터 상시 연결 |
+
 
 ⚡ 전원 구성 (Power Supply)
 송신기(Tx): Mean Well 5V 7A SMPS (LRS-35-5) 메인 전원 공급
@@ -66,5 +71,7 @@ LoRa E32-900T20D (TX),GPIO 17 (TX2),ESP32 ➔ LoRa 명령 송신
 비상 전원: TP4056 충전 모듈 + 18650 Li-ion 배터리 + DC-DC Boost converter (SMPS 정전 시 백업)
 
 수신기(Rx): 5V 2A 벽걸이형 DC 아답터 (ESP32 USB 상시 전원)
+
+
 
 
