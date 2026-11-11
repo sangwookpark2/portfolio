@@ -44,26 +44,8 @@
 
 ---
 
-## 📂 4. 소스 코드 구조 (Code Structure)
 
-주요 아두이노 제어 함수 구조:
-
-```cpp
-void setup()                // 핀 모드 설정 및 초음파/RC 수신기 초기화
-void loop()                 // 모드 전환 버튼 감지 및 선택된 모드 실행 (runAutonomousMode / runRCMode)
-
-// [자율주행 모드]
-void runAutonomousMode()    // 5개 초음파 센서 거리 측정 및 장애물 판단 로직
-void moveForwardWithAlign() // 중심 정렬(alignToCenter)을 포함한 직진 주행
-void alignToCenter()        // 좌/우 벽 거리 차 보정
-void turnLeft() / turnRight() // 장애물 회피 회전 동작
-
-// [RC 수동 모드]
-void runRCMode()            // PulseIn을 이용한 RC PWM 신호 파싱
-int gradualChange()         // 속도 변화 스텝 적용 (가감속 제어)
-void setMotorSpeed()        // 좌/우 모터 독립 속도 제어 및 방향 결정
-
-5. 실험 및 테스트 결과 (Experimental Results)
+4. 실험 및 테스트 결과 (Experimental Results)
 실내 미로 환경 테스트: 가로 40cm, 세로 150cm 직선 및 곡선 통로 구성
 
 중심 정렬 주행: 좌/우 벽 오차 5cm 이상 발생 시 즉시 보정하여 미로 중앙 유지 주행 성공
