@@ -72,17 +72,16 @@
 
 해결: 프론트엔드에서 캔버스 리사이징(320px) 및 JPEG 품질 55% 압축 스트리밍 전송 방식을 적용하여 실시간 반응 속도를 100ms 이내로 단축.
 
-# 전체 아키텍처 흐름
 
-![전체 아키텍처 흐름](./Architecture Data Flow.png)
+## ⚙️ System Architecture & Interface
 
-# 시스템 아키텍처 다이어그램
+### 1. Overall Architecture Flow
+![Overall Architecture Flow](./Architecture%20Data%20Flow.png)
 
-![시스템 아키텍처 다이어그램](./diagram.png)
+### 2. System Architecture Diagram
+![System Architecture Diagram](./diagrame.png)
 
-# 인터페이스
-
-![인터페이스](./interface.png)
-
+### 3. User Interface
+![User Interface](./interface.png)
 
 
