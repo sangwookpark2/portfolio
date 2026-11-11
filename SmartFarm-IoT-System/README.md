@@ -69,6 +69,14 @@ ESP32 마이크로컨트롤러와 **LoRa (E32-900T20D / 915MHz)** 장거리 무�
 수신기(Rx): 5V 2A 벽걸이형 DC 아답터 (ESP32 USB 상시 전원)
 
 
+### 🔌 액추에이터 및 제어 파트 (Actuators & Relays)
 
+* **5V 1채널 릴레이 모듈 (4채널 구성):** ESP32 GPIO 신호를 통한 액추에이터 전원 스위칭 제어
+* **관수 및 양액 공급 수중 펌프 (2개):** 
+  * 5V DC Mini Submersible Water Pump
+  * 수조 양액 및 토양 관수 수동/자동 제어
+* **환기 및 공기 순환 팬 (2개):** 
+  * 60mm DC 5V Brushless Cooling Fan
+  * 온실 내 CO2 분산 및 대기 온습도 환기 제어
 
 
