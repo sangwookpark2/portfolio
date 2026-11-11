@@ -74,12 +74,11 @@
 
 
 ### 1. Overall Architecture Flow
-![Overall Architecture Flow](Architecture%20Data%20Flow.png)
+<img src="Architecture%20Data%20Flow.png" width="100%">
 
 ### 2. System Architecture Diagram
-![System Architecture Diagram](diagrame.png)
+<img src="diagrame.png" width="100%">
 
 ### 3. User Interface
-![User Interface](interface.png)
-
+<img src="interface.png" width="100%">
 
