@@ -37,7 +37,7 @@
 
 ## ⚙️ 전체 시스템 아키텍처 (E2E Data Flow)
 
-```text
+
 [스마트폰 브라우저 UI (JS/HTML)] 
    │
    ├─ 1. 320px 리사이징 JPEG 프레임 / WebM 오디오 버퍼 전송 (HTTPS)
@@ -73,15 +73,15 @@
 해결: 프론트엔드에서 캔버스 리사이징(320px) 및 JPEG 품질 55% 압축 스트리밍 전송 방식을 적용하여 실시간 반응 속도를 100ms 이내로 단축.
 
 
-### 1. Overall Architecture Flow
-<img width="329" height="385" alt="전체 아키텍처 흐름" src="https://github.com/user-attachments/assets/6650aa03-6570-4f88-9e45-4e06f51ce32a" />
+## ⚙️ System Architecture & Interface
 
+### 1. Overall Architecture Flow
+![Overall Architecture Flow](./Architecture%20Data%20Flow.png)
 
 ### 2. System Architecture Diagram
-<img width="632" height="333" alt="시스템 아키텍처 다이어그램" src="https://github.com/user-attachments/assets/59d2f9ee-21ea-4810-94ad-e19b286293d9" />
-
+![System Architecture Diagram](./diagrame.png)
 
 ### 3. User Interface
-<img width="692" height="394" alt="인터페이스" src="https://github.com/user-attachments/assets/d9c418b6-6062-48cc-b4fe-60db4b2ed64d" />
+![User Interface](./interface.png)
 
 
