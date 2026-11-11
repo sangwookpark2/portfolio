@@ -26,6 +26,7 @@ ESP32 마이크로컨트롤러와 **LoRa (E32-900T20D / 915MHz)** 장거리 무�
 
 ## 📐 시스템 아키텍처 (System Architecture)
 
+<img width="3856" height="2514" alt="diagram" src="https://github.com/user-attachments/assets/8346d787-87d0-48de-949e-453a2272caa6" />
 
 [ 송신기 (Tx - 현장 1~4구역) ]
   ├── 센서 7종 수집 (CO2, 온습도, 토양수분, 조도, 수온, 수질, 수위)
@@ -72,6 +73,7 @@ ESP32 마이크로컨트롤러와 **LoRa (E32-900T20D / 915MHz)** 장거리 무�
 비상 전원: TP4056 충전 모듈 + 18650 Li-ion 배터리 + DC-DC Boost converter (SMPS 정전 시 백업)
 
 수신기(Rx): 5V 2A 벽걸이형 DC 아답터 (ESP32 USB 상시 전원)
+
 
 
 
