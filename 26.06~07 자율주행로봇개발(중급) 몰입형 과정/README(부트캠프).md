@@ -74,11 +74,14 @@
 
 
 ### 1. Overall Architecture Flow
-<img src="Architecture%20Data%20Flow.png" width="100%">
+<img width="329" height="385" alt="전체 아키텍처 흐름" src="https://github.com/user-attachments/assets/6650aa03-6570-4f88-9e45-4e06f51ce32a" />
+
 
 ### 2. System Architecture Diagram
-<img src="diagrame.png" width="100%">
+<img width="632" height="333" alt="시스템 아키텍처 다이어그램" src="https://github.com/user-attachments/assets/59d2f9ee-21ea-4810-94ad-e19b286293d9" />
+
 
 ### 3. User Interface
-<img src="interface.png" width="100%">
+<img width="692" height="394" alt="인터페이스" src="https://github.com/user-attachments/assets/d9c418b6-6062-48cc-b4fe-60db4b2ed64d" />
+
 
