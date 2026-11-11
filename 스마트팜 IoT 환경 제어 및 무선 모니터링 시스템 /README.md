@@ -28,17 +28,11 @@ ESP32 마이크로컨트롤러와 **LoRa (E32-900T20D / 915MHz)** 장거리 무�
 
 <img width="3856" height="2514" alt="diagram" src="https://github.com/user-attachments/assets/8346d787-87d0-48de-949e-453a2272caa6" />
 
-[ 송신기 (Tx - 현장 1~4구역) ]
-  ├── 센서 7종 수집 (CO2, 온습도, 토양수분, 조도, 수온, 수질, 수위)
-  ├── ESP32 MCU 데이터 연산 및 릴레이 제어 (수중 펌프 2개, 5V 팬 2개)
-  └── LoRa E32-900T20D 모듈 (915MHz RF 무선 데이터 송신)
-                                   │
-                                   │ (915MHz LoRa RF 장거리 무선 통신)
-                                   ▼
-[ 수신기 (Rx - 실내 관제) ]
-  ├── LoRa E32-900T20D 모듈 (구역별 데이터 무선 수신)
-  ├── ESP32 Wi-Fi AP / WebServer 구동
-  └── 스마트폰 & PC 웹 브라우저 실시간 대시보드 표시 및 원격 제어
+
+
+
+
+
 
 
 
